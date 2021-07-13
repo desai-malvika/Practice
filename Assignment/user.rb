@@ -1,5 +1,7 @@
+require 'yaml'
 require 'date'
-module UserData
+
+class User
   def user_name(user)
     puts "User's Full Name #{user[:first_name]} #{user[:last_name]}"
   end
@@ -9,7 +11,7 @@ module UserData
   end
 
   def user_age(user)
-    date = Date.parse user[:date_of_birth]
+    date = (Date.parse user[:date_of_birth])
     puts "Age of #{user[:first_name]} is #{Time.now.year - date.year}"
   end
 
@@ -25,8 +27,20 @@ module UserData
 
   def find_name(user)
     puts 'Finding same name'
-    user.each { |user|
-      puts user.values if user.value?('alex')
-    }
+    user.each { |user| puts user.values if user.value?('alex') }
+  end
+
+  def user_details
+    users = YAML.load_file('users_data.yaml')
+    users.each do |data|
+      user_name(data)
+      user_list(data)
+      user_age(data)
+      role(data)
+    end
+    find_name(users)
   end
 end
+
+user = User.new
+user.user_details
