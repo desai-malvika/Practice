@@ -1,16 +1,10 @@
 require 'yaml'
 
-module ProductData
+class Product
   def product_list(data)
-    data.each do |data|
-      puts data.values
-      puts '===='
+    data.each do |data| puts data.values
     end
   end
-end
-
-class Product
-  include ProductData
 
   def product_details
     products = YAML.load_file('products_data.yaml')
